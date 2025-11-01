@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
 	"flag"
 	"fmt"
 	"io"
@@ -265,6 +266,9 @@ func pullChartFromChartmuseum(helmChart HelmChart) error {
 	req.SetBasicAuth(harborUsername, harborPassword)
 
 	httpClient := http.Client{Timeout: timeout} //nolint:exhaustruct
+	if !plainHttp {
+		httpClient.Transport = &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure}}
+	}
 
 	res, err := httpClient.Do(req)
 	if err != nil {
