@@ -51,7 +51,7 @@ spec:
 
     - name: file-list-for-commit-sha
       value:
-        - chartmuseum2oci/Dockerfile
+        - chartmuseum2oci
   workspaces:
     - name: source
       volumeClaimTemplate:
